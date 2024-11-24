@@ -45,8 +45,10 @@ class FindDir():
         )
     ]
 
+    def __init__(self, upload_modify: bool) -> None:
+        self.last_modify_time = self._get_last_modify_time() if upload_modify else 0.0
+
     def run(self) -> None:
-        self._get_last_modify_time()
         self.dir_dict = {}
         for dir, url, url_d in self.dirpath_str:
             self.dir_dict[url] = set()
@@ -54,13 +56,13 @@ class FindDir():
             self._generate_dir_dict(Path(dir), url, url_d)
             print()
 
-    def _get_last_modify_time(self) -> None:
+    def _get_last_modify_time(self) -> float:
         last_modify_time_dict = {}
         for dir, _, _ in self.dirpath_str:
             dirpath = Path(dir)
             last_modify_time_dict[dir] = max(dirpath.stat().st_mtime,
                                              max((path.stat().st_mtime for path in dirpath.rglob('*')), default=None))
-        self.last_modify_time = max(last_modify_time_dict.values())
+        return max(last_modify_time_dict.values())
 
     def _generate_dir_dict(self, path: Path, url: str, url_d: str) -> None:
         if self._check_time(path):
