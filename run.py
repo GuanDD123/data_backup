@@ -27,7 +27,7 @@ def upload(dir_dict: dict[str, str] | dict[str, set[str]], value_type: Literal['
 
 
 def run():
-    dir_dict = str(Path(__file__).with_name('dir_dict.json'))
+    dir_dict_file = str(Path(__file__).with_name('dir_dict.json'))
     tips = dedent(
         f'''
         {'='*25}
@@ -44,17 +44,18 @@ def run():
             sync()
             dir_dict = find_dir()
             value_type = 'set'
-            upload(dir_dict, value_type)
+            if Prompt.ask(f'[bright_cyan]是否同步到云盘', choices=['y', 'n'], default='y') == 'y':
+                upload(dir_dict, value_type)
 
         elif mode == '2':
             try:
-                subprocess.run(['xdg-open', dir_dict])
+                subprocess.run(['xdg-open', dir_dict_file])
                 input()
             except:
                 pass
 
         else:
-            with open(dir_dict, encoding='utf-8') as f:
+            with open(dir_dict_file, encoding='utf-8') as f:
                 dir_dict = load(f)
                 value_type = 'str'
             upload(dir_dict, value_type)

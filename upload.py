@@ -1,6 +1,9 @@
 from undetected_chromedriver import Chrome
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
+from random import randint
 from pathlib import Path
 from typing import Literal
 
@@ -11,8 +14,8 @@ class Upload():
         self.value_type = value_type
 
     def run(self):
-        driver = Chrome(driver_executable_path='/usr/local/bin/chromedriver')
-        driver.get('https://login.123pan.com/centerlogin?redirect_url=https://www.123pan.com/')
+        self.driver = Chrome(driver_executable_path='/usr/local/bin/chromedriver')
+        self.driver.get('https://login.123pan.com/centerlogin?redirect_url=https://www.123pan.com/')
 
         input('登录完成？')
 
@@ -27,21 +30,19 @@ class Upload():
         for url, dir in self.dir_dict.items():
             self.new_page(url)
             for path in Path(dir).iterdir():
-                if path.is_dir() and (path.name.endswith('/d')):
-                        continue
                 self.upload(path)
-                if input('是否继续上传？') == 'n':
-                    return
+                time.sleep(randint(5, 20))
+            if input('是否上传下一批文件？') == 'n':
+                return
 
     def upload_increase(self):
         for url, dir_set in self.dir_dict.items():
             self.new_page(url)
-            num = 0
             for path in dir_set:
                 self.upload(path)
-                num += 1
-                if input(f'已上传 {num} 个文件，是否继续上传：') == 'n':
-                    return
+                time.sleep(randint(5, 20))
+            if input('是否上传下一批文件？') == 'n':
+                return
 
     def new_page(self, url: str):
         self.driver.get(url)
@@ -56,7 +57,14 @@ class Upload():
 
     def upload(self, path: Path):
         if path.is_file():
-            button = '//input[@type="file"]'
+            button = 'body > div:nth-child(32) > div > div > ul > li:nth-child(1) > span > div > input[type=file]'
         else:
-            button = '//input[@type="file" and @webkitdirectory]'
-        self.driver.find_element(By.XPATH, button).send_keys(str(path.absolute()))
+            button = 'body > div:nth-child(32) > div > div > ul > li:nth-child(2) > span > div > input[type=file]'
+        self.driver.find_element(By.CSS_SELECTOR, button).send_keys(str(path.absolute()))
+
+        wait = WebDriverWait(driver=self.driver, timeout=3600)
+        check = EC.text_to_be_present_in_element(
+            (By.CSS_SELECTOR, '#Dashboard > div > div > div > div.uppy-Dashboard-inner > div > div.uppy-DashboardContent-new-bar.complete > div.uppy-DashboardContent-new-bar-left > div'),
+            '上传完成')
+        wait.until(method=check)
+        print(f'{str(path)} 上传完成')
