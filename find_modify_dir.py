@@ -65,14 +65,15 @@ class FindDir():
         return max(last_modify_time_dict.values())
 
     def _generate_dir_dict(self, path: Path, url: str, url_d: str) -> None:
-        if self._check_time(path):
-            if (str(path.parent.parent.absolute()) == '/media/sika/Expansion') and path.is_file():
-                self.dir_dict[url].add(str(path.absolute()))
-            elif str(path.parent.parent.parent.absolute()) == '/media/sika/Expansion':
-                self.dir_dict[url_d].add(str(path.absolute()))
+        for path_child in path.iterdir():
+            if (str(path_child.parent.parent.absolute()) == '/media/sika/Expansion') and path_child.is_file():
+                if self._check_time(path_child):
+                    self.dir_dict[url].add(str(path_child.absolute()))
+            elif str(path_child.parent.parent.parent.absolute()) == '/media/sika/Expansion':
+                if self._check_time(path_child):
+                    self.dir_dict[url_d].add(str(path_child.absolute()))
             else:
-                for path_child in path.iterdir():
-                    self._generate_dir_dict(path_child, url, url_d)
+                self._generate_dir_dict(path_child, url, url_d)
 
     def _check_time(self, path: Path) -> bool:
         if path.stat().st_mtime >= self.last_modify_time:
