@@ -27,10 +27,10 @@ def run():
         {'='*25}
         1. 备份文件
         {'='*25}
-        2. 上传全部文件到云盘
+        2. 修改配置文件(Linux)
         {'='*25}
-        3. 修改配置文件(Linux)
-        4. 批量上传到云盘（配置文件）
+        3. 批量上传到云盘（个人配置）
+        4. 批量上传到云盘（默认配置）
         {'='*25}
         '''
     )
@@ -41,23 +41,23 @@ def run():
             case '1':
                 sync()
 
-            case '3':
+            case '2':
                 try:
                     subprocess.run(['xdg-open', dir_dict_file])
                     input()
                 except:
                     pass
 
-            case '2':
-                with open(dir_dict_file, encoding='utf-8') as f:
-                    dir_dict = load(f)['default_config']
-                    value_type = 'str'
-                    upload(dir_dict, value_type)
-            case '4':
+            case '3':
                 with open(dir_dict_file, encoding='utf-8') as f:
                     dir_dict = load(f)['person_config']
                     value_type = 'str'
                 upload(dir_dict, value_type)
+            case '4':
+                with open(dir_dict_file, encoding='utf-8') as f:
+                    dir_dict = load(f)['default_config']
+                    value_type = 'str'
+                    upload(dir_dict, value_type)
 
 
 if __name__ == '__main__':
