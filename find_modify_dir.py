@@ -14,9 +14,9 @@ class FindDir():
     def run(self) -> None:
         self.dir_dict = {}
         for url, dir in self.dir_dict_find_modify.items():
+            print(f'\n{dir}\n{'='*15}')
             self.dir_dict[url] = set()
             self._generate_dir_dict(Path(dir), url)
-            print()
 
     def _get_last_modify_time(self) -> float:
         last_modify_time_dict = {}
