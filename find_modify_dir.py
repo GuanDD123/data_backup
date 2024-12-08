@@ -45,8 +45,11 @@ class FindDir():
         )
     ]
 
-    def __init__(self, upload_modify: bool) -> None:
-        self.last_modify_time = self._get_last_modify_time() if upload_modify else 0.0
+    def __init__(self, last_modify_time: float = None) -> None:
+        if last_modify_time is None:
+            self.last_modify_time = self._get_last_modify_time()
+        else:
+            self.last_modify_time = last_modify_time
 
     def run(self) -> None:
         self.dir_dict = {}

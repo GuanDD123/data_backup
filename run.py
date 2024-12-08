@@ -9,11 +9,16 @@ from pathlib import Path
 from find_modify_dir import FindDir
 from upload import Upload
 
-
-def sync_find_modify_dir(upload_modify: bool) -> dict[str, set[str]]:
-    instance = FindDir(upload_modify)
+def sync()->None:
     for script in ('./sync_system.sh', './sync_person.sh'):
         subprocess.run(['bash', script])
+
+def sync_find_modify_dir(upload_modify: bool) -> dict[str, set[str]]:
+    if upload_modify:
+        instance = FindDir()
+        sync()
+    else:
+        instance = FindDir(0.0)
     instance.run()
     return instance.dir_dict
 
@@ -29,7 +34,8 @@ def run():
         f'''
         {'='*25}
         1. 备份文件并同步到云盘（同步修改）
-        2. 备份文件并同步到云盘（同步全部）
+        {'='*25}
+        2. 上传全部到云盘
         {'='*25}
         3. 修改配置文件(Linux)
         4. 批量上传到云盘（配置文件）
