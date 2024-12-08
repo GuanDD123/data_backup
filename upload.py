@@ -32,8 +32,11 @@ class Upload():
             for path in Path(dir).iterdir():
                 self.upload(path)
                 time.sleep(randint(5, 20))
-            if input('是否上传下一批文件？') == 'n':
+            flag = input('上传/跳过下一批文件/退出？')
+            if flag == 'q':
                 return
+            elif flag == 'n':
+                continue
 
     def upload_increase(self):
         for url, dir_set in self.dir_dict.items():
@@ -41,8 +44,11 @@ class Upload():
             for path in dir_set:
                 self.upload(path)
                 time.sleep(randint(5, 20))
-            if input('是否上传下一批文件？') == 'n':
+            flag = input('上传/跳过下一批文件/退出？')
+            if flag == 'q':
                 return
+            elif flag == 'n':
+                continue
 
     def new_page(self, url: str):
         self.driver.get(url)

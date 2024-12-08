@@ -1,3 +1,21 @@
 {
-    "url": "dirpath"
+    "person_config": {},
+    "find_modify": {
+        "https://www.123pan.com/?homeFilePath=10798076": "/media/sika/Expansion/00_Backup",
+        "https://www.123pan.com/?homeFilePath=10798076,10860065": "/media/sika/Expansion/00_Backup/d",
+        "https://www.123pan.com/?homeFilePath=10767595": "/media/sika/Expansion/10_Pictures",
+        "https://www.123pan.com/?homeFilePath=10767595,10767596": "/media/sika/Expansion/10_Pictures/d",
+        "https://www.123pan.com/?homeFilePath=10767852": "/media/sika/Expansion/20_Music",
+        "https://www.123pan.com/?homeFilePath=10767852,10798471": "/media/sika/Expansion/20_Music/d",
+        "https://www.123pan.com/?homeFilePath=10799744": "/media/sika/Expansion/30_Videos",
+        "https://www.123pan.com/?homeFilePath=10799744,10799746": "/media/sika/Expansion/30_Videos/d",
+        "https://www.123pan.com/?homeFilePath=10767974": "/media/sika/Expansion/40_Documents",
+        "https://www.123pan.com/?homeFilePath=10767974,10767975": "/media/sika/Expansion/40_Documents/d",
+        "https://www.123pan.com/?homeFilePath=10769488": "/media/sika/Expansion/50_Applications",
+        "https://www.123pan.com/?homeFilePath=10769488,10798588": "/media/sika/Expansion/50_Applications/d",
+        "https://www.123pan.com/?homeFilePath=10769603": "/media/sika/Expansion/60_Nutstore",
+        "https://www.123pan.com/?homeFilePath=10769603,10797938": "/media/sika/Expansion/60_Nutstore/d",
+        "https://www.123pan.com/?homeFilePath=10769646": "/media/sika/Expansion/61_Cryptomator",
+        "https://www.123pan.com/?homeFilePath=10769646,10769647": "/media/sika/Expansion/61_Cryptomator/d"
+    }
 }
