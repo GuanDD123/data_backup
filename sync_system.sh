@@ -20,7 +20,8 @@ rsync -avh --delete --no-specials\
     ~/ ~/.local/share/Cryptomator/mnt/Backup_tmp/home/
 tar -czf ~/.local/share/Cryptomator/mnt/Backup_tmp/home.tar.gz -C ~/.local/share/Cryptomator/mnt/Backup_tmp home
 rm -rf ~/.local/share/Cryptomator/mnt/Backup_tmp/home/
-echo -e "\nhome/\n=====================\n"
+echo -e "home/\n=====================\ncontinue?"
+read
 
 rsync -avh --delete --no-specials\
     --exclude='apt/' \
@@ -48,7 +49,8 @@ rsync -avh --delete --no-specials\
     /etc/ ~/.local/share/Cryptomator/mnt/Backup_tmp/etc/
 tar -czf ~/.local/share/Cryptomator/mnt/Backup_tmp/etc.tar.gz -C ~/.local/share/Cryptomator/mnt/Backup_tmp etc
 rm -rf ~/.local/share/Cryptomator/mnt/Backup_tmp/etc/
-echo -e "\n/etc/\n=====================\n"
+echo -e "/etc/\n=====================\ncontinue?"
+read
 
 rsync -avh --delete --no-specials\
     --include='*/' \
@@ -62,7 +64,8 @@ rsync -avh --delete --no-specials\
     /var/ ~/.local/share/Cryptomator/mnt/Backup_tmp/var/
 tar -czf ~/.local/share/Cryptomator/mnt/Backup_tmp/var.tar.gz -C ~/.local/share/Cryptomator/mnt/Backup_tmp var
 rm -rf ~/.local/share/Cryptomator/mnt/Backup_tmp/var/
-echo -e "\n/var/\n=====================\n"
+echo -e "/var/\n=====================\ncontinue?"
+read
 
 rsync -avh --delete --no-specials\
     --include='*/' \
@@ -80,9 +83,12 @@ rsync -avh --delete --no-specials\
     /usr/local/ ~/.local/share/Cryptomator/mnt/Backup_tmp/usr_local/
 tar -czf ~/.local/share/Cryptomator/mnt/Backup_tmp/usr_local.tar.gz -C ~/.local/share/Cryptomator/mnt/Backup_tmp usr_local
 rm -rf ~/.local/share/Cryptomator/mnt/Backup_tmp/usr_local/
-echo -e "\n/usr/local/\n=====================\n"
+echo -e "/usr/local/\n=====================\ncontinue?"
+read
 
 rsync -avh --delete ~/文档/Backup_tmp/ /media/sika/Expansion/00_Backup/
 rm ~/.local/share/Cryptomator/mnt/Backup_tmp/*
+echo -e "\n00_Backup/\n=====================\ncontinue?"
+read
 
 dpkg --get-selections >~/.local/share/Cryptomator/mnt/00_Backup/installed-packages.list

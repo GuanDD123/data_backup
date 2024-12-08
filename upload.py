@@ -28,27 +28,27 @@ class Upload():
 
     def upload_whole(self):
         for url, dir in self.dir_dict.items():
+            flag = input(f'{dir}\n上传/跳过(n)/退出(q)？')
+            if flag == 'q':
+                return
+            elif flag == 'n':
+                continue
             self.new_page(url)
             for path in Path(dir).iterdir():
                 self.upload(path)
-                time.sleep(randint(5, 20))
-            flag = input('上传/跳过下一批文件/退出？')
-            if flag == 'q':
-                return
-            elif flag == 'n':
-                continue
+                time.sleep(randint(10, 30)/10)
 
     def upload_increase(self):
         for url, dir_set in self.dir_dict.items():
-            self.new_page(url)
-            for path in dir_set:
-                self.upload(path)
-                time.sleep(randint(5, 20))
-            flag = input('上传/跳过下一批文件/退出？')
+            flag = input(f'{dir_set}\n上传/跳过(n)/退出(q)？')
             if flag == 'q':
                 return
             elif flag == 'n':
                 continue
+            self.new_page(url)
+            for path in dir_set:
+                self.upload(path)
+                time.sleep(randint(10, 30)/10)
 
     def new_page(self, url: str):
         self.driver.get(url)

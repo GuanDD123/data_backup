@@ -6,7 +6,6 @@ from textwrap import dedent
 from json import load
 from pathlib import Path
 
-from find_modify_dir import FindDir
 from upload import Upload
 
 
@@ -14,13 +13,6 @@ def sync() -> None:
     for script in (str(Path(__file__).with_name('sync_system.sh')),
                    str(Path(__file__).with_name('sync_person.sh'))):
         subprocess.run(['bash', script])
-
-
-def sync_find_modify_dir(dir_dict_find_modify: dict[str, str]) -> dict[str, set[str]]:
-    instance = FindDir(dir_dict_find_modify=dir_dict_find_modify)
-    sync()
-    instance.run()
-    return instance.dir_dict
 
 
 def upload(dir_dict: dict[str, str] | dict[str, set[str]], value_type: Literal['set', 'str']) -> None:
@@ -34,12 +26,11 @@ def run():
         f'''
         {'='*25}
         1. 备份文件
-        2. 备份文件并同步到云盘（同步修改）
         {'='*25}
-        3. 上传全部到云盘
+        2. 上传全部文件到云盘
         {'='*25}
-        4. 修改配置文件(Linux)
-        5. 批量上传到云盘（配置文件）
+        3. 修改配置文件(Linux)
+        4. 批量上传到云盘（配置文件）
         {'='*25}
         '''
     )
@@ -50,27 +41,19 @@ def run():
             case '1':
                 sync()
 
-            case '2':
-                with open(dir_dict_file, encoding='utf-8') as f:
-                    dir_dict_find_modify = load(f)['find_modify']
-                dir_dict = sync_find_modify_dir(dir_dict_find_modify)
-                value_type = 'set'
-                if Prompt.ask(f'[bright_cyan]是否同步到云盘', choices=['y', 'n'], default='y') == 'y':
-                    upload(dir_dict, value_type)
-
-            case '4':
+            case '3':
                 try:
                     subprocess.run(['xdg-open', dir_dict_file])
                     input()
                 except:
                     pass
 
-            case '3':
+            case '2':
                 with open(dir_dict_file, encoding='utf-8') as f:
-                    dir_dict = load(f)['find_modify']
+                    dir_dict = load(f)['default_config']
                     value_type = 'str'
                     upload(dir_dict, value_type)
-            case '5':
+            case '4':
                 with open(dir_dict_file, encoding='utf-8') as f:
                     dir_dict = load(f)['person_config']
                     value_type = 'str'

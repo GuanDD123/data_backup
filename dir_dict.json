@@ -1,6 +1,6 @@
 {
     "person_config": {},
-    "find_modify": {
+    "default_config": {
         "https://www.123pan.com/?homeFilePath=10798076": "/media/sika/Expansion/00_Backup",
         "https://www.123pan.com/?homeFilePath=10798076,10860065": "/media/sika/Expansion/00_Backup/d",
         "https://www.123pan.com/?homeFilePath=10767595": "/media/sika/Expansion/10_Pictures",
